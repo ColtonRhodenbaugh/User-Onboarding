@@ -7,8 +7,8 @@ describe("User-Onboarding", () => {
     const textInput = () => cy.get("input[name=username]");
     const emailInput = () => cy.get("input[name=email]");
     const passInput = () => cy.get("input[name=password]");
-    const tosCheck = () => cy.get(`input[type="checkbox"]`);
-    const submitBtn = () => cy.get("input[type=submit]");
+    const tosCheck = () => cy.get("input[name=tos]");
+    const submitBtn = () => cy.get('input[type="submit"]');
 
     //sanity check
     it("sanity-check",()=>{
@@ -43,15 +43,23 @@ describe("User-Onboarding", () => {
             .type("foobar")
             .should("have.value", "foobar");
         })
-        describe("checkbox", () => {
 
-        })
-        describe("submit button is working", () => {
-          
-        })
-
-
-
+    })
+    describe("checkbox is working", () => {
+        it('should allow a user to check the terms of service box', () => {
+            cy.get('[name="tos"]').check();
+            cy.get('[name="tos"]').should('be.checked');
+          });
+    })
+    describe("submitBtn is working", () => {
+        it('should allow a user to submit the form data', () => {
+            cy.get('[name="username"]').type('John');
+            cy.get('[name="email"]').type('johndoe@example.com');
+            cy.get('[name="password"]').type('foobar')
+            cy.get('input[type="submit"]').click();
+            cy.get('form').should('exist');
+          });
+        
     })
 
 
